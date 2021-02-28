@@ -47,6 +47,7 @@ void load_verthash () {
 }
 
 void verthash_hash(const unsigned char* input, const size_t input_size, unsigned char* output) {
+    load_verthash();
     unsigned char p1[HASH_OUT_SIZE];
     sha3(&input[0], input_size, &p1[0], HASH_OUT_SIZE);
 
