@@ -29,6 +29,7 @@ extern "C" {
     #include "shavite3.h"
     #include "skein.h"
     #include "sponge.h"
+    #include "verthash.h"
     #include "x11.h"
     #include "x13.h"
     #include "x15.h"
@@ -105,6 +106,26 @@ using namespace v8;
  DECLARE_CALLBACK(x16r, x16r_hash, 32);
  DECLARE_CALLBACK(x16rv2, x16rv2_hash, 32);
  DECLARE_CALLBACK(yescrypt, yescrypt_hash, 32);
+
+DECLARE_FUNC(verthash) {
+    if (info.Length() < 1)
+        RETURN_EXCEPT("You must provide arguments");
+
+    Local<Object> target = Nan::To<Object>(info[0]).ToLocalChecked();
+
+    if(!Buffer::HasInstance(target))
+        RETURN_EXCEPT("Argument should be a buffer object.");
+
+
+    char * input = Buffer::Data(target);
+    char output[32];
+
+    uint32_t input_len = Buffer::Length(target);
+
+    verthash_hash(input, input_len, output);
+
+    SET_BUFFER_RETURN(output, 32);
+}
 
 DECLARE_FUNC(argon2d) {
     if (info.Length() < 4)
@@ -415,6 +436,7 @@ NAN_MODULE_INIT(init) {
     NAN_EXPORT(target, sha256d);
     NAN_EXPORT(target, shavite3);
     NAN_EXPORT(target, skein);
+    NAN_EXPORT(target, verthash);
     NAN_EXPORT(target, x11);
     NAN_EXPORT(target, x13);
     NAN_EXPORT(target, x15);

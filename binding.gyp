@@ -27,6 +27,7 @@
                 "src/sha256d.c",
                 "src/shavite3.c",
                 "src/skein.c",
+                "src/verthash.c",
                 "src/x11.c",
                 "src/x13.c",
                 "src/x15.c",
@@ -75,6 +76,7 @@
                 "src/neoscrypt.c",
                 "src/crypto/yescrypt/yescrypt-best.c",
                 "src/crypto/yescrypt/yescryptcommon.c",
+                "src/tiny_sha3/sha3.c"
             ],
             "include_dirs": [
                 "src/crypto",
